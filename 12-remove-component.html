@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      class Clock extends React.Component {
+        constructor() {
+          console.log("constructor");
+          super();
+          this.state = { date: new Date() };
+          //    构造函数绑定 性能好
+          this.go = this.go.bind(this);
+          this.removeComponent = this.removeComponent.bind(this);
+        }
+        // 移除组件 如果不释放就会导致内存溢出
+        removeComponent() {
+          ReactDOM.unmountComponentAtNode(document.getElementById("app"));
+        }
+
+        go() {
+          this.timerId = setInterval(() => {
+            this.tick();
+          }, 1000);
+        }
+        //   构造函数绑定 性能好
+        render() {
+          return (
+            <div>
+              <h1>time</h1>
+              <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+              <button onClick={this.go}>开始</button>
+              <button onClick={this.removeComponent}>删除组件</button>
+            </div>
+          );
+        }
+
+        // 修改state
+        tick() {
+          console.log("tick");
+          this.setState({
+            date: new Date(),
+          });
+        }
+
+        // // 已挂载 已经渲染完成dom 然后调动修改的函数
+        // componentDidMount() {
+        //   console.log("compinentDidMount");
+        // }
+
+        // 卸载 同时注意资源释放(如果不释放就会导致内存溢出)
+        componentWillUnmount() {
+          clearInterval(this.timerId);
+        }
+      }
+      ReactDOM.render(<Clock />, document.getElementById("app"));
+    </script>
+  </body>
+</html>

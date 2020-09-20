@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+   <script>
+       //纯函数
+       //输入相同的参数返回值都一样
+       //传入的相同的参数只能获取返回值而不能改变返回值
+       function sum(a,b){
+           return a+b;
+       }
+       console.log(sum(2,3));
+       console.log(sum(2,3));
+       //不纯函数
+       let payload = 0;
+       function sum2(a,b){
+         a=++payload;
+         return a+b;
+       }
+       console.log(sum2(2,3));
+       console.log(sum2(2,3));
+   </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      //   class Student extends React.Component {
+      //     render() {
+      //       console.log(this.props.children);
+      //       return (
+      //         <div>
+      //           <h1>hello {this.props.name}</h1>
+      //           {this.props.children}
+      //         </div>
+      //       );
+      //     }
+      //   }
+      //   //   const vDom = <Student name="LinHaiyang">aaaa</Student>//aaaa
+      //   //   const vDom = <Student name="LinHaiyang" />//undefined
+      //   const vDom = (
+      //     <Student name="lll">
+      //       <span>aaa</span>
+      //       <span>bbb</span>
+      //       <span>ccc</span>
+      //     </Student>
+      //   );
+
+      //ES6 map方法 正常遍历数组可以但是单组件标签，组件里面单个数据 map就会报错
+      //   class Student extends React.Component {
+      //     render() {
+      //       console.log(this.props.children);
+      //       return (
+      //         <div>
+      //           <h1>hello {this.props.name}</h1>
+      //           <ul>
+      //             {this.props.children.map((item) => {
+      //               return <li>{item}</li>;
+      //             })}
+      //           </ul>
+      //         </div>
+      //       );
+      //     }
+      //   }
+
+
+      //react提供了处理this.props.children的方法 React.Children.map(this.props.children, (child) => {return <li>{child}</li>;})
+      class Student extends React.Component {
+        render() {
+          return (<div>
+            <h1>hello {this.props.name}</h1>
+            <ul>
+              {React.Children.map(this.props.children, (child) => {
+                return <li>{child}</li>;
+              })}
+            </ul>
+          </div>);
+        }
+      }
+      const vDom = (
+        <Student name="lll">
+          <span>aaa</span>
+          <span>bbb</span>
+          <span>ccc</span>
+        </Student>
+      );
+      ReactDOM.render(vDom, document.getElementById("app"));
+    </script>
+  </body>
+</html>

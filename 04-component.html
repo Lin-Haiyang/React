@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <!-- 组件 -->
+    <script type="text/babel">
+      //01 函数组件（简单组件：没有自己的状态）
+      //首字母大写（识别为组件），首小写（识别为元素）
+      //props - jsx属性（自动转化为对象{name:"linhiayang"}）
+        //   function Welcome(props){
+        //       return <h1>Hello {props.name}</h1>
+        //   }
+        //   ReactDOM.render(<Welcome name="linhaiyang" />, document.getElementById("app"));
+          
+      //02 Class 组件（复杂组件：有自己的状态和生命周期）
+      //类组件将props属性挂载到自身上
+      // class Welcome extends React.Component{
+      //     render(){
+      //         console.log(this);
+      //         return <h1>hello {this.props.name}</h1>;
+      //     }
+      // }
+      // ReactDOM.render(<Welcome name="linhaiyang" />, document.getElementById("app"));
+
+      //03 使用组件和渲染
+      // class Welcome extends React.Component{
+      //     render(){
+      //         console.log(this);
+      //         return <h1>hello {this.props.name}</h1>;
+      //     }
+      // }
+      // const vDom = <Welcome name="Lin-Haiyang"/>
+      // ReactDOM.render(vDom, document.getElementById("app"));
+
+      //04 组件组合：组件封装
+      function Welcome(props){
+        return <h1>hello world {props.name}</h1>;
+      }
+      function App(){
+        return (
+          <div>
+            <Welcome name="Lin" />
+            <Welcome name="Hai" />
+            <Welcome name="Yang" />
+          </div>
+        )
+      }
+      ReactDOM.render(<App/>,document.getElementById("app"));
+    </script>
+  </body>
+</html>

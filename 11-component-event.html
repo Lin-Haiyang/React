@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      class Clock extends React.Component {
+        constructor() {
+          console.log("constructor");
+          super();
+          this.state = { date: new Date() };
+          //   03 构造函数绑定 性能好
+          this.go = this.go.bind(this);
+        }
+        // go() {
+        //   console.log(this); //undefined
+        //   this.timerId = setInterval(() => {
+        //     this.tick();
+        //   }, 1000);
+        // }
+        // this.go 可以直接调用，因为内部就会调用go()
+        // 01 this.go.bind(this) render内绑定 每次渲染就需要绑定this执行
+        // 生成一个新函数  组件开销大
+        // render() {
+        //   console.log("render");
+        //   return (
+        //     <div>
+        //       <h1>time</h1>
+        //       <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+        //       <button onClick={this.go.bind(this)}>开始</button>
+        //     </div>
+        //   );
+        // }
+
+        // go() {
+        //   console.log(this); //undefined
+        //   this.timerId = setInterval(() => {
+        //     this.tick();
+        //   }, 1000);
+        // }
+        // 02 ()=>{this.go()} 箭头函数this指向当前的组件（作用域）
+        // render中 渲染都需要创建一个新的处理函数
+        // 组件开销大 层级越低 开销越大 a(b(d,e),c(e,f))
+        // render() {
+        //   console.log("render");
+        //   return (
+        //     <div>
+        //       <h1>time</h1>
+        //       <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+        //       <button
+        //         onClick={() => {
+        //           this.go();
+        //         }}
+        //       >
+        //         开始
+        //       </button>
+        //     </div>
+        //   );
+        // }
+
+        // go() {
+        //   console.log(this); //undefined
+        //   this.timerId = setInterval(() => {
+        //     this.tick();
+        //   }, 1000);
+        // }
+        //03 构造函数绑定 性能好
+        // render() {
+        //   console.log("render");
+        //   return (
+        //     <div>
+        //       <h1>time</h1>
+        //       <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+        //       <button onClick={this.go}>开始</button>
+        //     </div>
+        //   );
+        // }
+
+
+        //04 ES7 属性初始化
+        go = () => {
+          console.log(this); //绑定Clock组件
+          this.timerId = setInterval(() => {
+            this.tick();
+          }, 1000);
+        };
+
+        render() {
+          console.log("render");
+          return (
+            <div>
+              <h1>time</h1>
+              <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+              <button onClick={this.go}>开始</button>
+            </div>
+          );
+        }
+        // 修改state
+        tick() {
+          this.setState({
+            date: new Date(),
+          });
+        }
+
+        // // 已挂载 已经渲染完成dom 然后调动修改的函数
+        // componentDidMount() {
+        //   console.log("compinentDidMount");
+        // }
+
+        // 卸载 同时注意资源释放(如果不释放就会导致内存溢出)
+        componentWillUnmount() {
+          clearInterval(this.timerId);
+        }
+
+      }
+      ReactDOM.render(<Clock />, document.getElementById("app"));
+    </script>
+  </body>
+</html>

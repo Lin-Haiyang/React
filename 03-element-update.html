@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <!-- 元素更新 -->
+    <script type="text/babel">
+      //01 一个元素渲染成DOM的过程
+      //root节点->定义元素->虚拟对象vDom(自动)->ReactDOM.render() 同步DOM
+      //   const element = (
+      //     <div>
+      //       <h1>Time</h1>
+      //       <h2>it is {new Date().toLocaleTimeString()}</h2>
+      //       <h2>it is {new Date().toLocaleDateString()}</h2>
+      //       <h2>it is {new Date().toLocaleString()}</h2>
+      //     //   it is 下午3:03:27
+      //     //   it is 2020/9/18
+      //     //   it is 2020/9/18 下午3:03:27
+      //     </div>
+      //   );
+
+      // 02元素更新
+
+      function tick() {
+        const element = (
+          <div>
+            <h1>Time</h1>
+            <h2>it is {new Date().toLocaleTimeString()}</h2>
+            <h2>it is {new Date().toLocaleDateString()}</h2>
+            <h2>it is {new Date().toLocaleString()}</h2>
+          </div>
+        );
+        ReactDOM.render(element, document.getElementById("app"));
+      }
+      setInterval(tick, 1000);
+    </script>
+  </body>
+</html>

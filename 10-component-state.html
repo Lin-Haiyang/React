@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      // 01 函数组件
+      //   function Clock(props) {
+      //     return (
+      //       <div>
+      //         <h1>time</h1>
+      //         <h1>it is {props.date.toLocaleTimeString()}</h1>
+      //       </div>
+      //     );
+      //   }
+      //   function tick() {
+      //     ReactDOM.render(
+      //       <Clock date={new Date()} />,
+      //       document.getElementById("app")
+      //     );
+      //   }
+      //   setInterval(tick, 1000);
+
+      //  02类组件
+      // class Clock extends React.Component {
+      //   render() {
+      //     return (
+      //       <div>
+      //         <h1>time</h1>
+      //         <h1>it is {this.props.date.toLocaleTimeString()}</h1>
+      //       </div>
+      //     );
+      //   }
+      // }
+      // function tick(){
+      //     ReactDOM.render(<Clock date={new Date()}/>,document.getElementById("app"));
+      // }
+      // setInterval(tick,1000);
+
+      // 03 state 类组件有额外功能：组件属性和生命周期函数
+      // state是组件私有
+      // 1.constructor(props)写出后必须调用super()
+      // 2.constructor生命周期函数里（只能在初始化的时候）的state是可以直接修改的地方
+      // 其他地方只能调用setState来修改
+        class Clock extends React.Component {
+          constructor() {
+            console.log("constructor");
+            super();
+            // 内部修改state
+            this.state = { date: new Date() };
+          }
+            //外部修改   
+          //state = { date: new Date() };
+
+          // 只要有跟新发生就会就会调用渲染方法
+          render() {
+            console.log("render");
+            return (
+              <div>
+                <h1>time</h1>
+                <h1>it is {this.state.date.toLocaleTimeString()}</h1>
+              </div>
+            );
+          }
+          // 修改state
+          tick(){
+              this.setState({
+                  date:new Date()
+              })
+          }
+          // 已挂载 已经渲染完成dom 然后调动修改的函数
+          componentDidMount(){
+              console.log("compinentDidMount");
+              this.timerId = setInterval(()=>{
+                  this.tick()
+              },1000)
+          }
+          // 卸载 同时注意资源释放
+          componentWillUnmount(){
+              clearInterval(this.timerId)
+          }
+        }
+        ReactDOM.render(<Clock/>,document.getElementById("app"))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+ 
+    <div id="app"></div>
+ 
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+ 
+    <script type="text/babel">
+        //1.变量
+        // var name = "react"
+        // var vDom = <h1>hello {name}</h1>;
+
+        //2.计算
+        // var vDom = <h1>hello {2019+1}</h1>
+
+        //3.调用函数
+        // var user = {
+        //     firstname:"Lin",
+        //     lastname:"Haiyang"
+        // };
+        // function formatName(user){
+        //     return user.firstname+"-"+user.lastname
+        // };
+        // var vDom = <h1>hello {formatName(user)}</h1>
+
+        // var user = {
+        //     firstname:"Lin",
+        //     lastname:"Haiyang"
+        // };
+        // function formatName(user){
+        //     return user.firstname+"-"+user.lastname
+        // };
+        // function greeting(user){
+        //     if (user) {
+        //         return <h1>hello {formatName(user)}</h1>
+        //     }else{
+        //         return <h1>hello stranger</h1>
+        //     }
+        // }
+        // var vDom = greeting(user)
+
+        // 4.属性
+        // var user = {
+        //     firstname:"Lin",
+        //     lastname:"Haiyang",
+        //     avatar:"C:\\Users\\74447\\Pictures\\images\\logo.jpg"
+        // };
+        // let style = {width:100,height:100 };
+        // const vDom = <img src={user.avatar} style={style} />
+
+        //5.包含子元素
+        //如果有同级元素必须进行元素包裹
+        // const vDom = (
+        //   <div>
+        //     <ul>
+        //       <li>aaa</li>
+        //       <li>bbb</li>
+        //     </ul>
+        //   </div>
+        // )
+
+        //6.遍历
+        const users = ["zs","ls","ww","zl"];
+        const elements = []; 
+        for (let i = 0; i < users.length; i++) {
+          elements.push(<li>{users[i]}</li>);
+          
+        }
+        const vDom = <ul>{elements}</ul>
+      ReactDOM.render(vDom, document.getElementById("app"));
+    </script>
+  </body>
+</html>

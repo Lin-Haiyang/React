@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <script src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      class Student extends React.Component {
+        //类组件的里面定义规则
+        static propTypes = {
+            name:PropTypes.string.isrequired,
+            age:PropTypes.string.isrequired
+        }
+        static defaultProps = {
+            sex:"man"
+        }
+        render(props) {
+          return (<ul>
+            <li>name:{this.props.name}</li>
+            <li>age:{this.props.age}</li>
+            <li>sex:{this.props.sex}</li>
+          </ul>);
+        }
+      }
+      var User = {
+          name:"less",
+          age:18,
+          sex:1
+      }
+    //类组件外部定义规则
+    //   Student.propTypes = {
+    //     age:PropTypes.number.isRequired,
+    //     sex:PropTypes.number.isRequired,
+    //   }
+    //   const vDom = <Student {...User} />
+
+         const vDom = <Student name={User.name} age={User.age} />
+    
+      ReactDOM.render(vDom, document.getElementById("app"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 2.准备根节点 -->
+    <div id="app"></div>
+    <!-- 1.引入库 -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+    <!--babel解析jsx  -->
+    <script type="text/babel">
+      //3.创建虚拟dom <h1>hello world</h1>就是jsx语法
+      var vDom = <h1>hello world</h1>;
+      //4.将虚拟DOM 渲染到真实DOM 容器
+      ReactDOM.render(vDom, document.getElementById("app"));
+    </script>
+  </body>
+</html>
