@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      // 01 水温是否沸腾组件
+      function Boil(props) {
+        if (props.c >= 100) {
+          return <p>the water is boil</p>;
+        } else {
+          return <p>the water is not boil</p>;
+        }
+      }
+      //02 组件拆分
+      //   class Calculator extends React.Component {
+      //     render() {
+      //       return (
+      //         <React.Fragment>
+      //           <TemperatureInput type="c" />
+      //           <TemperatureInput type="f" />
+      //           <Boil />
+      //         </React.Fragment>
+      //       );
+      //     }
+      //   }
+
+      //   class TemperatureInput extends React.Component {
+      //     constructor() {
+      //       super();
+      //       this.state = {
+      //         temperature: "",
+      //       };
+      //     }
+      //     handleChange = (e) => {
+      //       this.setState({
+      //         temperature: e.target.value,
+      //       });
+      //     };
+      //     render() {
+      //       const typeName = {
+      //         c: "摄氏度",
+      //         f: "华氏度",
+      //       };
+      //       return (
+      //         <fieldset>
+      //           <legend>请输入{typeName[this.props.type]}(c):</legend>
+      //           <input
+      //             type="text"
+      //             value={this.state.temperature}
+      //             onChange={this.handleChange}
+      //           />
+      //         </fieldset>
+      //       );
+      //     }
+      //   }
+
+      //03 解决数据传递问题：状态提升（state提升到父组件）
+
+      class Calculator extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            temperature: "",
+            type: "c",
+          };
+        }
+        handleChange = (t) => {
+          this.setState({
+            temperature: t,
+            type: "c",
+          });
+        };
+        handleChange1 = (t) => {
+          this.setState({
+            temperature: t,
+            type: "f",
+          });
+        };
+        toF(c) {
+
+            return (c * 9) / 5 + 32;
+
+        }
+        toC(f) {
+            return ((f - 32) * 5) / 9;
+        }
+        convert(temperature,fn){
+            const input = parseFloat(temperature);
+            if(Number.isNaN(input)){
+                return "";
+            }
+            const output = fn(input);
+            const rounded = Math.round(output*1000)/1000;
+            return rounded.toString();
+        }
+        render() {
+          const ctemperature =
+            this.state.type == "c"
+              ? this.state.temperature
+              : this.convert(this.state.temperature,this.toC);
+          const ftemperature =
+            this.state.type == "f"
+              ? this.state.temperature
+              : this.convert(this.state.temperature,this.toF);
+       
+          return (
+            <React.Fragment>
+              <TemperatureInput
+                type="c"
+                temperature={ctemperature}
+                onChangeTemperature={this.handleChange}
+              />
+              <TemperatureInput
+                type="f"
+                temperature={ftemperature}
+                onChangeTemperature={this.handleChange1}
+              />
+              <Boil c={parseFloat(ctemperature)} />
+            </React.Fragment>
+          );
+        }
+      }
+
+      class TemperatureInput extends React.Component {
+        handleChange = (e) => {
+          this.props.onChangeTemperature(e.target.value);
+        };
+
+        render() {
+          const typeName = {
+            c: "摄氏度",
+            f: "华氏度",
+          };
+          return (
+            <fieldset>
+              <legend>请输入{typeName[this.props.type]}({this.props.type}):</legend>
+              <input
+                type="text"
+                value={this.props.temperature}
+                onChange={this.handleChange}
+              />
+            </fieldset>
+          );
+        }
+      }
+
+      ReactDOM.render(<Calculator />, document.getElementById("app"));
+    </script>
+  </body>
+</html>
